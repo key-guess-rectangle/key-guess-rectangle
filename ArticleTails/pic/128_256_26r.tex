@@ -1,0 +1,555 @@
+\documentclass{standalone}
+\usepackage{tikz}
+\usepackage{calc}
+\usepackage{pgffor}
+%\usepackage{patterns}
+\begin{document}
+\begin{tikzpicture}[scale = 0.45,every node/.style={scale=0.5}]
+\makeatletter
+\fill[color=lightgray] (0,11) rectangle ++(1,1);
+\fill[color=lightgray] (1,11) rectangle ++(1,1);
+\fill[color=lightgray] (0,10) rectangle ++(1,1);
+\fill[color=lightgray] (1,10) rectangle ++(1,1);
+\fill[color=lightgray] (2,10) rectangle ++(1,1);
+\fill[color=lightgray] (3,10) rectangle ++(1,1);
+\fill[color=lightgray] (0,9) rectangle ++(1,1);
+\fill[color=lightgray] (1,9) rectangle ++(1,1);
+\fill[color=lightgray] (2,9) rectangle ++(1,1);
+\fill[color=lightgray] (3,9) rectangle ++(1,1);
+\fill[color=lightgray] (0,8) rectangle ++(1,1);
+\fill[color=lightgray] (1,8) rectangle ++(1,1);
+\fill[color=lightgray] (2,8) rectangle ++(1,1);
+\fill[color=lightgray] (3,8) rectangle ++(1,1);
+\fill[color=lightgray] (5,11) rectangle ++(1,1);
+\fill[color=lightgray] (6,11) rectangle ++(1,1);
+\fill[color=lightgray] (5,10) rectangle ++(1,1);
+\fill[color=lightgray] (6,10) rectangle ++(1,1);
+\fill[color=lightgray] (7,10) rectangle ++(1,1);
+\fill[color=lightgray] (8,10) rectangle ++(1,1);
+\fill[color=lightgray] (5,9) rectangle ++(1,1);
+\fill[color=lightgray] (6,9) rectangle ++(1,1);
+\fill[color=lightgray] (7,9) rectangle ++(1,1);
+\fill[color=lightgray] (8,9) rectangle ++(1,1);
+\fill[color=lightgray] (5,8) rectangle ++(1,1);
+\fill[color=lightgray] (6,8) rectangle ++(1,1);
+\fill[color=lightgray] (7,8) rectangle ++(1,1);
+\fill[color=lightgray] (8,8) rectangle ++(1,1);
+
+\fill[color=lightgray] (11,11) rectangle ++(1,1);
+\fill[color=lightgray] (12,11) rectangle ++(1,1);
+\fill[color=lightgray] (10,10) rectangle ++(1,1);
+\fill[color=lightgray] (11,10) rectangle ++(1,1);
+\fill[color=lightgray] (10,9) rectangle ++(1,1);
+\fill[color=lightgray] (13,9) rectangle ++(1,1);
+\fill[color=lightgray] (10,8) rectangle ++(1,1);
+\fill[color=lightgray] (12,8) rectangle ++(1,1);
+\fill[color=lightgray] (13,8) rectangle ++(1,1);
+\fill[color=lightgray] (16,11) rectangle ++(1,1);
+\fill[color=lightgray] (17,11) rectangle ++(1,1);
+\fill[color=lightgray] (15,10) rectangle ++(1,1);
+\fill[color=lightgray] (16,10) rectangle ++(1,1);
+\fill[color=lightgray] (15,9) rectangle ++(1,1);
+\fill[color=lightgray] (18,9) rectangle ++(1,1);
+\fill[color=lightgray] (15,8) rectangle ++(1,1);
+\fill[color=lightgray] (17,8) rectangle ++(1,1);
+\fill[color=lightgray] (18,8) rectangle ++(1,1);
+
+\fill[color=lightgray] (22,11) rectangle ++(1,1);
+\fill[color=lightgray] (23,11) rectangle ++(1,1);
+\fill[color=lightgray] (21,10) rectangle ++(1,1);
+\fill[color=lightgray] (22,10) rectangle ++(1,1);
+\fill[color=lightgray] (21,9) rectangle ++(1,1);
+\fill[color=lightgray] (21,8) rectangle ++(1,1);
+\fill[color=lime] (27,11) rectangle ++(1,1);
+\fill[color=lime] (28,11) rectangle ++(1,1);
+\fill[color=lime] (26,10) rectangle ++(1,1);
+\fill[color=lime] (27,10) rectangle ++(1,1);
+\fill[color=lime] (26,9) rectangle ++(1,1);
+\fill[color=lime] (26,8) rectangle ++(1,1);
+
+\fill[color=pink] (222,6) rectangle ++(1,1);
+\fill[color=pink] (222,5) rectangle ++(1,1);
+\fill[color=pink] (222,3) rectangle ++(1,1);
+\fill[color=lightgray] (227,6) rectangle ++(1,1);
+\fill[color=lightgray] (227,5) rectangle ++(1,1);
+\fill[color=lightgray] (227,3) rectangle ++(1,1);
+
+\fill[color=lightgray] (231,6) rectangle ++(1,1);
+\fill[color=lightgray] (232,6) rectangle ++(1,1);
+\fill[color=lightgray] (232,5) rectangle ++(1,1);
+\fill[color=lightgray] (233,4) rectangle ++(1,1);
+\fill[color=lightgray] (232,3) rectangle ++(1,1);
+\fill[color=lightgray] (236,6) rectangle ++(1,1);
+\fill[color=lightgray] (237,6) rectangle ++(1,1);
+\fill[color=lightgray] (237,5) rectangle ++(1,1);
+\fill[color=lightgray] (238,4) rectangle ++(1,1);
+\fill[color=lightgray] (237,3) rectangle ++(1,1);
+
+\fill[color=lightgray] (241,6) rectangle ++(1,1);
+\fill[color=lightgray] (242,6) rectangle ++(1,1);
+\fill[color=lightgray] (241,5) rectangle ++(1,1);
+\fill[color=lightgray] (242,5) rectangle ++(1,1);
+\fill[color=lightgray] (241,4) rectangle ++(1,1);
+\fill[color=lightgray] (243,4) rectangle ++(1,1);
+\fill[color=lightgray] (241,3) rectangle ++(1,1);
+\fill[color=lightgray] (242,3) rectangle ++(1,1);
+\fill[color=lightgray] (246,6) rectangle ++(1,1);
+\fill[color=lightgray] (247,6) rectangle ++(1,1);
+\fill[color=lightgray] (246,5) rectangle ++(1,1);
+\fill[color=lightgray] (247,5) rectangle ++(1,1);
+\fill[color=lightgray] (246,4) rectangle ++(1,1);
+\fill[color=lightgray] (248,4) rectangle ++(1,1);
+\fill[color=lightgray] (246,3) rectangle ++(1,1);
+\fill[color=lightgray] (247,3) rectangle ++(1,1);
+
+\fill[color=lightgray] (250,6) rectangle ++(1,1);
+\fill[color=lightgray] (251,6) rectangle ++(1,1);
+\fill[color=lightgray] (252,6) rectangle ++(1,1);
+\fill[color=lightgray] (253,6) rectangle ++(1,1);
+\fill[color=lightgray] (251,5) rectangle ++(1,1);
+\fill[color=lightgray] (252,5) rectangle ++(1,1);
+\fill[color=lightgray] (251,4) rectangle ++(1,1);
+\fill[color=lightgray] (252,4) rectangle ++(1,1);
+\fill[color=lightgray] (253,4) rectangle ++(1,1);
+\fill[color=lightgray] (251,3) rectangle ++(1,1);
+\fill[color=lightgray] (252,3) rectangle ++(1,1);
+\fill[color=lightgray] (253,3) rectangle ++(1,1);
+\fill[color=lightgray] (255,6) rectangle ++(1,1);
+\fill[color=lightgray] (256,6) rectangle ++(1,1);
+\fill[color=lightgray] (257,6) rectangle ++(1,1);
+\fill[color=lightgray] (258,6) rectangle ++(1,1);
+\fill[color=lightgray] (256,5) rectangle ++(1,1);
+\fill[color=lightgray] (257,5) rectangle ++(1,1);
+\fill[color=lightgray] (256,4) rectangle ++(1,1);
+\fill[color=lightgray] (257,4) rectangle ++(1,1);
+\fill[color=lightgray] (258,4) rectangle ++(1,1);
+\fill[color=lightgray] (256,3) rectangle ++(1,1);
+\fill[color=lightgray] (257,3) rectangle ++(1,1);
+\fill[color=lightgray] (258,3) rectangle ++(1,1);
+
+\fill[color=lime] (30,11) rectangle ++(1,1);
+\fill[color=lime] (33,10) rectangle ++(1,1);
+\fill[color=lime] (32,9) rectangle ++(1,1);
+\fill[color=lime] (35,11) rectangle ++(1,1);
+\fill[color=lime] (38,10) rectangle ++(1,1);
+\fill[color=lime] (37,9) rectangle ++(1,1);
+\fill[color=lightgray] (30,3) rectangle ++(4,4);
+\fill[color=lightgray] (35,3) rectangle ++(4,4);
+
+\fill[color=lime] (40,10) rectangle ++(1,1);
+\fill[color=lime] (45,10) rectangle ++(1,1);
+\fill[color=lightgray] (40,3) rectangle ++(4,4);
+\fill[color=lightgray] (45,3) rectangle ++(4,4);
+
+\fill[color=lightgray] (50,3) rectangle ++(4,4);
+\fill[color=lightgray] (55,3) rectangle ++(4,4);
+
+\fill[color=lightgray] (60,3) rectangle ++(4,4);
+\fill[color=lightgray] (65,3) rectangle ++(4,4);
+
+\fill[color=lightgray] (70,3) rectangle ++(4,4);
+\fill[color=lightgray] (75,3) rectangle ++(4,4);
+
+\fill[color=lightgray] (80,3) rectangle ++(4,4);
+\fill[color=lightgray] (85,3) rectangle ++(4,4);
+
+\fill[color=lime] (92,9) rectangle ++(1,1);
+\fill[color=lime] (97,9) rectangle ++(1,1);
+\fill[color=lightgray] (90,3) rectangle ++(4,4);
+\fill[color=lightgray] (95,3) rectangle ++(4,4);
+
+\fill[color=lime] (100,11) rectangle ++(1,1);
+\fill[color=lime] (100,9) rectangle ++(1,1);
+\fill[color=lime] (100,8) rectangle ++(1,1);
+\fill[color=lime] (105,11) rectangle ++(1,1);
+\fill[color=lime] (105,9) rectangle ++(1,1);
+\fill[color=lime] (105,8) rectangle ++(1,1);
+\fill[color=lightgray] (100,3) rectangle ++(4,4);
+\fill[color=lightgray] (105,3) rectangle ++(4,4);
+
+\fill[color=lime] (110,11) rectangle ++(1,1);
+\fill[color=lime] (112,11) rectangle ++(1,1);
+\fill[color=lime] (110,10) rectangle ++(1,1);
+\fill[color=lime] (113,10) rectangle ++(1,1);
+\fill[color=lime] (112,9) rectangle ++(1,1);
+\fill[color=lime] (110,8) rectangle ++(1,1);
+\fill[color=lime] (112,8) rectangle ++(1,1);
+\fill[color=lime] (113,8) rectangle ++(1,1);
+\fill[color=lime] (115,11) rectangle ++(1,1);
+\fill[color=lime] (117,11) rectangle ++(1,1);
+\fill[color=lime] (115,10) rectangle ++(1,1);
+\fill[color=lime] (118,10) rectangle ++(1,1);
+\fill[color=lime] (117,9) rectangle ++(1,1);
+\fill[color=lime] (115,8) rectangle ++(1,1);
+\fill[color=lime] (117,8) rectangle ++(1,1);
+\fill[color=lime] (118,8) rectangle ++(1,1);
+\fill[color=lightgray] (110,3) rectangle ++(4,4);
+\fill[color=lightgray] (115,3) rectangle ++(4,4);
+
+\fill[color=lime] (121,11) rectangle ++(1,1);
+\fill[color=lime] (123,11) rectangle ++(1,1);
+\fill[color=lime] (120,10) rectangle ++(1,1);
+\fill[color=lime] (122,10) rectangle ++(1,1);
+\fill[color=lime] (121,9) rectangle ++(1,1);
+\fill[color=lime] (122,8) rectangle ++(1,1);
+\fill[color=lime] (126,11) rectangle ++(1,1);
+\fill[color=lime] (128,11) rectangle ++(1,1);
+\fill[color=lime] (125,10) rectangle ++(1,1);
+\fill[color=lime] (127,10) rectangle ++(1,1);
+\fill[color=lime] (126,9) rectangle ++(1,1);
+\fill[color=lime] (127,8) rectangle ++(1,1);
+\fill[color=lightgray] (122,6) rectangle ++(1,1);
+\fill[color=lightgray] (123,6) rectangle ++(1,1);
+\fill[color=lightgray] (120,5) rectangle ++(1,1);
+\fill[color=lightgray] (121,5) rectangle ++(1,1);
+\fill[color=lightgray] (122,5) rectangle ++(1,1);
+\fill[color=lightgray] (123,5) rectangle ++(1,1);
+\fill[color=lightgray] (120,4) rectangle ++(1,1);
+\fill[color=lightgray] (121,4) rectangle ++(1,1);
+\fill[color=lightgray] (122,4) rectangle ++(1,1);
+\fill[color=lightgray] (123,4) rectangle ++(1,1);
+\fill[color=lightgray] (120,3) rectangle ++(1,1);
+\fill[color=lightgray] (121,3) rectangle ++(1,1);
+\fill[color=lightgray] (122,3) rectangle ++(1,1);
+\fill[color=lightgray] (123,3) rectangle ++(1,1);
+\fill[color=lightgray] (127,6) rectangle ++(1,1);
+\fill[color=pink] (128,6) rectangle ++(1,1);
+\fill[color=pink] (125,5) rectangle ++(1,1);
+\fill[color=lightgray] (126,5) rectangle ++(1,1);
+\fill[color=pink] (127,5) rectangle ++(1,1);
+\fill[color=lightgray] (128,5) rectangle ++(1,1);
+\fill[color=lightgray] (125,4) rectangle ++(1,1);
+\fill[color=pink] (126,4) rectangle ++(1,1);
+\fill[color=lightgray] (127,4) rectangle ++(1,1);
+\fill[color=pink] (128,4) rectangle ++(1,1);
+\fill[color=lightgray] (125,3) rectangle ++(1,1);
+\fill[color=lightgray] (126,3) rectangle ++(1,1);
+\fill[color=pink] (127,3) rectangle ++(1,1);
+\fill[color=lightgray] (128,3) rectangle ++(1,1);
+
+\fill[color=lime] (131,10) rectangle ++(1,1);
+\fill[color=lime] (133,10) rectangle ++(1,1);
+\fill[color=lime] (130,9) rectangle ++(1,1);
+\fill[color=lime] (131,9) rectangle ++(1,1);
+\fill[color=lime] (131,8) rectangle ++(1,1);
+\fill[color=lightgray] (136,10) rectangle ++(1,1);
+\fill[color=lightgray] (138,10) rectangle ++(1,1);
+\fill[color=lightgray] (135,9) rectangle ++(1,1);
+\fill[color=lime] (136,9) rectangle ++(1,1);
+\fill[color=lightgray] (136,8) rectangle ++(1,1);
+\fill[color=lightgray] (130,6) rectangle ++(1,1);
+\fill[color=lightgray] (133,6) rectangle ++(1,1);
+\fill[color=lightgray] (132,5) rectangle ++(1,1);
+\fill[color=pink] (133,5) rectangle ++(1,1);
+\fill[color=pink] (131,4) rectangle ++(1,1);
+\fill[color=lightgray] (132,4) rectangle ++(1,1);
+\fill[color=lightgray] (130,3) rectangle ++(1,1);
+\fill[color=pink] (131,3) rectangle ++(1,1);
+\fill[color=lightgray] (132,3) rectangle ++(1,1);
+\fill[color=pink] (135,6) rectangle ++(1,1);
+\fill[color=pink] (138,6) rectangle ++(1,1);
+\fill[color=lightgray] (137,5) rectangle ++(1,1);
+\fill[color=pink] (138,5) rectangle ++(1,1);
+\fill[color=pink] (136,4) rectangle ++(1,1);
+\fill[color=pink] (137,4) rectangle ++(1,1);
+\fill[color=lightgray] (135,3) rectangle ++(1,1);
+\fill[color=pink] (136,3) rectangle ++(1,1);
+\fill[color=lightgray] (137,3) rectangle ++(1,1);
+
+\fill[color=lightgray] (140,11) rectangle ++(1,1);
+\fill[color=lightgray] (142,11) rectangle ++(1,1);
+\fill[color=lime] (143,11) rectangle ++(1,1);
+\fill[color=lightgray] (140,9) rectangle ++(1,1);
+\fill[color=lightgray] (142,9) rectangle ++(1,1);
+\fill[color=lime] (143,9) rectangle ++(1,1);
+\fill[color=lightgray] (142,8) rectangle ++(1,1);
+\fill[color=lime] (143,8) rectangle ++(1,1);
+\fill[color=lightgray] (145,11) rectangle ++(1,1);
+\fill[color=lightgray] (147,11) rectangle ++(1,1);
+\fill[color=lime] (148,11) rectangle ++(1,1);
+\fill[color=lightgray] (145,9) rectangle ++(1,1);
+\fill[color=lightgray] (147,9) rectangle ++(1,1);
+\fill[color=lightgray] (148,9) rectangle ++(1,1);
+\fill[color=lightgray] (147,8) rectangle ++(1,1);
+\fill[color=lightgray] (148,8) rectangle ++(1,1);
+\fill[color=lightgray] (141,6) rectangle ++(1,1);
+\fill[color=lightgray] (143,6) rectangle ++(1,1);
+\fill[color=pink] (140,5) rectangle ++(1,1);
+\fill[color=pink] (143,5) rectangle ++(1,1);
+\fill[color=lightgray] (143,4) rectangle ++(1,1);
+\fill[color=pink] (140,3) rectangle ++(1,1);
+\fill[color=pink] (146,6) rectangle ++(1,1);
+\fill[color=pink] (148,6) rectangle ++(1,1);
+\fill[color=pink] (145,5) rectangle ++(1,1);
+\fill[color=pink] (148,5) rectangle ++(1,1);
+\fill[color=pink] (148,4) rectangle ++(1,1);
+\fill[color=pink] (145,3) rectangle ++(1,1);
+
+\fill[color=lightgray] (150,11) rectangle ++(1,1);
+\fill[color=lightgray] (151,11) rectangle ++(1,1);
+\fill[color=lightgray] (152,11) rectangle ++(1,1);
+\fill[color=lime] (153,11) rectangle ++(1,1);
+\fill[color=lightgray] (150,10) rectangle ++(1,1);
+\fill[color=lime] (151,10) rectangle ++(1,1);
+\fill[color=lightgray] (152,10) rectangle ++(1,1);
+\fill[color=lime] (153,10) rectangle ++(1,1);
+\fill[color=lightgray] (150,9) rectangle ++(1,1);
+\fill[color=lightgray] (151,9) rectangle ++(1,1);
+\fill[color=lightgray] (152,9) rectangle ++(1,1);
+\fill[color=lightgray] (150,8) rectangle ++(1,1);
+\fill[color=lightgray] (151,8) rectangle ++(1,1);
+\fill[color=lightgray] (152,8) rectangle ++(1,1);
+\fill[color=lime] (153,8) rectangle ++(1,1);
+\fill[color=lightgray] (155,11) rectangle ++(1,1);
+\fill[color=lightgray] (156,11) rectangle ++(1,1);
+\fill[color=lightgray] (157,11) rectangle ++(1,1);
+\fill[color=lightgray] (158,11) rectangle ++(1,1);
+\fill[color=lightgray] (155,10) rectangle ++(1,1);
+\fill[color=lightgray] (156,10) rectangle ++(1,1);
+\fill[color=lightgray] (157,10) rectangle ++(1,1);
+\fill[color=lightgray] (158,10) rectangle ++(1,1);
+\fill[color=lightgray] (155,9) rectangle ++(1,1);
+\fill[color=lightgray] (156,9) rectangle ++(1,1);
+\fill[color=lightgray] (157,9) rectangle ++(1,1);
+\fill[color=lightgray] (155,8) rectangle ++(1,1);
+\fill[color=lightgray] (156,8) rectangle ++(1,1);
+\fill[color=lightgray] (157,8) rectangle ++(1,1);
+\fill[color=lime] (158,8) rectangle ++(1,1);
+\fill[color=pink] (151,5) rectangle ++(1,1);
+\fill[color=pink] (153,5) rectangle ++(1,1);
+\fill[color=pink] (150,4) rectangle ++(1,1);
+\fill[color=pink] (153,3) rectangle ++(1,1);
+\fill[color=pink] (156,5) rectangle ++(1,1);
+\fill[color=pink] (158,5) rectangle ++(1,1);
+\fill[color=pink] (155,4) rectangle ++(1,1);
+\fill[color=pink] (158,3) rectangle ++(1,1);
+
+\fill[color=lightgray] (160,8) rectangle ++(4,4);
+\fill[color=lightgray] (165,8) rectangle ++(4,4);
+\fill[color=pink] (162,3) rectangle ++(1,1);
+\fill[color=pink] (167,3) rectangle ++(1,1);
+
+\fill[color=lightgray] (170,8) rectangle ++(4,4);
+\fill[color=lightgray] (175,8) rectangle ++(4,4);
+\fill[color=pink] (171,6) rectangle ++(1,1);
+\fill[color=pink] (176,6) rectangle ++(1,1);
+
+\fill[color=lightgray] (180,8) rectangle ++(4,4);
+\fill[color=lightgray] (185,8) rectangle ++(4,4);
+
+\fill[color=lightgray] (190,8) rectangle ++(4,4);
+\fill[color=lightgray] (195,8) rectangle ++(4,4);
+
+\fill[color=lightgray] (200,8) rectangle ++(4,4);
+\fill[color=lightgray] (205,8) rectangle ++(4,4);
+
+\fill[color=lightgray] (210,8) rectangle ++(4,4);
+\fill[color=lightgray] (215,8) rectangle ++(4,4);
+
+\fill[color=pink] (37.5,1.5) rectangle ++(1,1);
+\fill[color=lime] (47.5,12.5) rectangle ++(1,1);
+\fill[color=pink] (59.5,1.5) rectangle ++(1,1);
+\fill[color=pink] (77.5,0.5) rectangle ++(1,1);
+\fill[color=lime] (88.5,12.5) rectangle ++(1,1);
+\fill[color=pink] (99.5,0.5) rectangle ++(1,1);
+\fill[color=lime] (110.5,13.5) rectangle ++(1,1);
+\fill[color=pink] (118.5,0.5) rectangle ++(1,1);
+\fill[color=lime] (130.5,12.5) rectangle ++(1,1);
+\fill[color=pink] (140.5,1.5) rectangle ++(1,1);
+\fill[color=lime] (148.5,13.5) rectangle ++(1,1);
+\fill[color=pink] (160.5,0.5) rectangle ++(1,1);
+\fill[color=lime] (167.5,13.5) rectangle ++(1,1);
+\fill[color=pink] (178.5,1.5) rectangle ++(1,1);
+\fill[color=lime] (189.5,13.5) rectangle ++(1,1);
+\fill[color=lime] (207.5,12.5) rectangle ++(1,1);
+\fill[color=pink] (219.5,1.5) rectangle ++(1,1);
+\fill[color=lime] (7.5,13.5) rectangle ++(1,1);
+\fill[color=lime] (29.5,13.5) rectangle ++(1,1);
+\fill[color=pink] (237.5,0.5) rectangle ++(1,1);
+
+
+
+%grid
+\@for\x:={0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21}\do{
+	\@for\y:={8}\do{
+		\@for\i:={0,1,2,3,4}\do{
+			\draw (10*\x+\i, \y)   -- ++(0,4);
+			\draw (10*\x, \y+\i)   -- ++(4,0);
+			\draw (10*\x+5+\i, \y) -- ++(0,4);
+			\draw (10*\x+5, \y+\i) -- ++(4,0);}
+		\node[align=center] at (10*\x+4.5, \y+2.5) {SB};
+		\draw[->] (10*\x+4, \y+2) -- ++(1,0);}
+	\node[align=center] at (10*\x+3, 13) {\textbf{\Large R\x}};}
+
+
+
+%grid
+\@for\x:={3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25}\do{
+	\@for\y:={3}\do{
+		\@for\i:={0,1,2,3,4}\do{
+			\draw (10*\x+\i, \y)   -- ++(0,4);
+			\draw (10*\x, \y+\i)   -- ++(4,0);
+			\draw (10*\x+5+\i, \y) -- ++(0,4);
+			\draw (10*\x+5, \y+\i) -- ++(4,0);}
+		\node[align=center] at (10*\x+4.5, \y+2.5) {SB};
+		\draw[->] (10*\x+4, \y+2) -- ++(1,0);}
+	\node[align=center] at (10*\x+3, 2)  {\textbf{\Large R\x}};}
+\@for\x:={7.5,17.5,27.5,37.5,47.5,57.5,67.5,77.5,87.5,97.5,107.5,117.5,127.5,137.5,147.5,157.5,167.5,177.5,187.5,197.5,207.5,217.5}\do{
+	\@for\y:={12.5}\do{
+		\@for\i:={0,1,2,3,4}\do{
+			\draw (\x+\i, \y) -- ++(0,2);}
+		\@for\i:={0,1,2}\do{
+			\draw (\x, \y+\i) -- ++(4,0);}}
+	\@for\y:={12.5}\do{
+		\draw[->] (\x+1.5, 0.5*\y+3.75) -- ++(1,0);
+		\draw[->] (\x+2, \y) -- (\x+2, 0.5*\y+3.75);
+		\node[align=center] at (\x+2, 0.3*\y+5.25) {ART\\SR\\MC};}}
+\@for\x:={37.5,47.5,57.5,67.5,77.5,87.5,97.5,107.5,117.5,127.5,137.5,147.5,157.5,167.5,177.5,187.5,197.5,207.5,217.5,227.5,237.5,247.5}\do{
+	\@for\y:={0.5}\do{
+		\@for\i:={0,1,2,3,4}\do{
+			\draw (\x+\i, \y) -- ++(0,2);}
+		\@for\i:={0,1,2}\do{
+			\draw (\x, \y+\i) -- ++(4,0);}}
+	\@for\y:={2.5}\do{
+		\draw[->] (\x+1.5, 0.5*\y+3.75) -- ++(1,0);
+		\draw[->] (\x+2, \y) -- (\x+2, 0.5*\y+3.75);
+		\node[align=center] at (\x+2, 0.3*\y+5.25) {ART\\SR\\MC};}}
+\makeatother
+
+\node[align=center] at (30.5,11.5) {\Large $203$};
+\node[align=center] at (35.5,11.5) {\Large $26$};
+\node[align=center] at (33.5,10.5) {\Large $203$};
+\node[align=center] at (38.5,10.5) {\Large $26$};
+\node[align=center] at (32.5,9.5) {\Large $203$};
+\node[align=center] at (37.5,9.5) {\Large $26$};
+
+\node[align=center] at (40.5,10.5) {\Large $26$};
+\node[align=center] at (45.5,10.5) {\Large $88$};
+
+
+
+
+
+\node[align=center] at (92.5,9.5) {\Large $176$};
+\node[align=center] at (97.5,9.5) {\Large $128$};
+
+\node[align=center] at (100.5,11.5) {\Large $128$};
+\node[align=center] at (105.5,11.5) {\Large $192$};
+\node[align=center] at (100.5,9.5) {\Large $128$};
+\node[align=center] at (105.5,9.5) {\Large $192$};
+\node[align=center] at (100.5,8.5) {\Large $128$};
+\node[align=center] at (105.5,8.5) {\Large $208$};
+
+\node[align=center] at (110.5,11.5) {\Large $192$};
+\node[align=center] at (115.5,11.5) {\Large $4$};
+\node[align=center] at (112.5,11.5) {\Large $192$};
+\node[align=center] at (117.5,11.5) {\Large $4$};
+\node[align=center] at (110.5,10.5) {\Large $192$};
+\node[align=center] at (115.5,10.5) {\Large $4$};
+\node[align=center] at (113.5,10.5) {\Large $208$};
+\node[align=center] at (118.5,10.5) {\Large $4$};
+\node[align=center] at (112.5,9.5) {\Large $192$};
+\node[align=center] at (117.5,9.5) {\Large $4$};
+\node[align=center] at (110.5,8.5) {\Large $192$};
+\node[align=center] at (115.5,8.5) {\Large $4$};
+\node[align=center] at (112.5,8.5) {\Large $192$};
+\node[align=center] at (117.5,8.5) {\Large $4$};
+\node[align=center] at (113.5,8.5) {\Large $208$};
+\node[align=center] at (118.5,8.5) {\Large $4$};
+
+\node[align=center] at (121.5,11.5) {\Large $4$};
+\node[align=center] at (126.5,11.5) {\Large $1$};
+\node[align=center] at (123.5,11.5) {\Large $4$};
+\node[align=center] at (128.5,11.5) {\Large $1$};
+\node[align=center] at (128.5,6.5) {\Large $4$};
+\node[align=center] at (120.5,10.5) {\Large $4$};
+\node[align=center] at (125.5,10.5) {\Large $5$};
+\node[align=center] at (125.5,5.5) {\Large $1$};
+\node[align=center] at (122.5,10.5) {\Large $4$};
+\node[align=center] at (127.5,10.5) {\Large $1$};
+\node[align=center] at (127.5,5.5) {\Large $4$};
+\node[align=center] at (121.5,9.5) {\Large $4$};
+\node[align=center] at (126.5,9.5) {\Large $1$};
+\node[align=center] at (126.5,4.5) {\Large $4$};
+\node[align=center] at (128.5,4.5) {\Large $4$};
+\node[align=center] at (122.5,8.5) {\Large $4$};
+\node[align=center] at (127.5,8.5) {\Large $1$};
+\node[align=center] at (127.5,3.5) {\Large $4$};
+
+\node[align=center] at (135.5,6.5) {\Large $4$};
+\node[align=center] at (138.5,6.5) {\Large $213$};
+\node[align=center] at (131.5,10.5) {\Large $1$};
+\node[align=center] at (133.5,10.5) {\Large $1$};
+\node[align=center] at (133.5,5.5) {\Large $4$};
+\node[align=center] at (138.5,5.5) {\Large $1$};
+\node[align=center] at (130.5,9.5) {\Large $17$};
+\node[align=center] at (131.5,9.5) {\Large $5$};
+\node[align=center] at (136.5,9.5) {\Large $5$};
+\node[align=center] at (131.5,4.5) {\Large $5$};
+\node[align=center] at (136.5,4.5) {\Large $5$};
+\node[align=center] at (137.5,4.5) {\Large $1$};
+\node[align=center] at (131.5,8.5) {\Large $1$};
+\node[align=center] at (131.5,3.5) {\Large $4$};
+\node[align=center] at (136.5,3.5) {\Large $5$};
+
+\node[align=center] at (146.5,6.5) {\Large $1$};
+\node[align=center] at (143.5,11.5) {\Large $5$};
+\node[align=center] at (148.5,11.5) {\Large $1$};
+\node[align=center] at (148.5,6.5) {\Large $1$};
+\node[align=center] at (140.5,5.5) {\Large $4$};
+\node[align=center] at (145.5,5.5) {\Large $1$};
+\node[align=center] at (143.5,5.5) {\Large $5$};
+\node[align=center] at (148.5,5.5) {\Large $1$};
+\node[align=center] at (143.5,9.5) {\Large $5$};
+\node[align=center] at (148.5,4.5) {\Large $1$};
+\node[align=center] at (140.5,3.5) {\Large $5$};
+\node[align=center] at (145.5,3.5) {\Large $1$};
+\node[align=center] at (143.5,8.5) {\Large $5$};
+
+\node[align=center] at (153.5,11.5) {\Large $1$};
+\node[align=center] at (151.5,10.5) {\Large $146$};
+\node[align=center] at (151.5,5.5) {\Large $1$};
+\node[align=center] at (156.5,5.5) {\Large $32$};
+\node[align=center] at (153.5,10.5) {\Large $1$};
+\node[align=center] at (153.5,5.5) {\Large $1$};
+\node[align=center] at (158.5,5.5) {\Large $32$};
+\node[align=center] at (150.5,4.5) {\Large $1$};
+\node[align=center] at (155.5,4.5) {\Large $32$};
+\node[align=center] at (153.5,8.5) {\Large $1$};
+\node[align=center] at (158.5,8.5) {\Large $32$};
+\node[align=center] at (153.5,3.5) {\Large $1$};
+\node[align=center] at (158.5,3.5) {\Large $32$};
+
+\node[align=center] at (162.5,3.5) {\Large $32$};
+\node[align=center] at (167.5,3.5) {\Large $128$};
+
+\node[align=center] at (171.5,6.5) {\Large $128$};
+\node[align=center] at (176.5,6.5) {\Large $192$};
+
+
+
+
+
+\node[align=center] at (38,2) {\Large $170$};
+\node[align=center] at (48,13) {\Large $88$};
+\node[align=center] at (60,2) {\Large $213$};
+\node[align=center] at (78,1) {\Large $42$};
+\node[align=center] at (89,13) {\Large $176$};
+\node[align=center] at (100,1) {\Large $212$};
+\node[align=center] at (111,14) {\Large $208$};
+\node[align=center] at (119,1) {\Large $40$};
+\node[align=center] at (131,13) {\Large $17$};
+\node[align=center] at (141,2) {\Large $208$};
+\node[align=center] at (149,14) {\Large $146$};
+\node[align=center] at (161,1) {\Large $32$};
+\node[align=center] at (168,14) {\Large $149$};
+\node[align=center] at (179,2) {\Large $192$};
+\node[align=center] at (190,14) {\Large $155$};
+\node[align=center] at (208,13) {\Large $135$};
+\node[align=center] at (220,2) {\Large $129$};
+
+\end{tikzpicture}
+
+
+
+\end{document}
