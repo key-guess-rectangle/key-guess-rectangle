@@ -1,7 +1,7 @@
 #88 Key Guessing Strategies for Linear Key-Schedule Algorithms in Rectangle Attacks
 ===
 
-Experiment on Rectangle Attack 10-Round Simon-32/64
+Experiment of Rectangle Attack on 10-Round Simon-32/64
 ---
 * `Rebuttal_Supplement_Simon32.pdf`: discribe an experiment on 10-round Simon-32/64.
 * `10r_simon32_rectangle.cpp`: Source code for the experiment.
