@@ -1,18 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include<map>
-#include<vector>
-#include<ctime>
+#include <map>
+#include <vector>
+#include <ctime>
 #include <string.h>
 #include <math.h>
+#include <omp.h>
+#include <bitset>
 #include <iostream>
 using namespace std;
 
-#define Nthreads 32
+#define Nthreads 16
 #define TAKE_BIT(x,pos) (((x)>>pos)&0x1)
 typedef unsigned long long int UINT64;
-map<unsigned char, vector<unsigned char> > Sbox_4_y;
-map<unsigned long long, int> keycounter;
+map<unsigned char, vector<unsigned char>> Sbox_4_y;
+
 
 unsigned char roundkeyCells_k1[17][2][4];
 unsigned char roundkeyCells_k2[17][2][4];
@@ -55,8 +57,6 @@ const unsigned char RC[62] = {
        0x34, 0x29, 0x12, 0x24, 0x08, 0x11, 0x22, 0x04, 0x09, 0x13,
        0x26, 0x0c, 0x19, 0x32, 0x25, 0x0a, 0x15, 0x2a, 0x14, 0x28,
        0x10, 0x20};
-
-FILE* fic;
 
 void display_matrix(unsigned char state[4][4], int ver)
 {
@@ -675,7 +675,7 @@ unsigned long geneindex(unsigned char* p1,unsigned char* p2)
    index = (p1[2]>>4)&0x0F;
    index = (index << 4)|((p1[5]>>4)&0x0F);
    index = (index << 4)|((p1[6]>>4)&0x0F);
-   index = (p2[2]>>4)&0x0F;
+   index = (index << 4)|(p2[2]>>4)&0x0F;
    index = (index << 4)|((p2[5]>>4)&0x0F);
    index = (index << 4)|((p2[6]>>4)&0x0F);
    return index;
@@ -713,7 +713,7 @@ void generateSbox_4_y()
     }*/
 }
 
-int keyrecovery15(unsigned char c[4][8])
+int keyrecovery15(map<unsigned long long, int> keycounter,unsigned char c[4][8])
 {
     unsigned char X_15[4][4][4]={0};
     unsigned char Y_15[4][4][4]={0};
@@ -900,7 +900,7 @@ int keyrecovery15(unsigned char c[4][8])
     
 }
 
-void keyrecovery(unsigned char c[4][8])
+void keyrecovery(map<unsigned long long, int> keycounter,unsigned char c[4][8])
 {
     //cout << "right quartet" << endl;
     unsigned char X_16[4][4][4]={0};
@@ -1052,7 +1052,7 @@ void keyrecovery(unsigned char c[4][8])
                                                             Z_15[2][i] = ((Xt16[2][(2*i)>>2][(2*i)&0x3] & 0xF) << 4) | (Xt16[2][(2*i+1)>>2][(2*i+1)&0x3] & 0xF);
                                                             Z_15[3][i] = ((Xt16[3][(2*i)>>2][(2*i)&0x3] & 0xF) << 4) | (Xt16[3][(2*i+1)>>2][(2*i+1)&0x3] & 0xF);
                                                             
-                                                            keyrecovery15(Z_15);
+                                                            keyrecovery15(keycounter,Z_15);
                                                         }
                                                         
                                                     }
@@ -1065,19 +1065,13 @@ void keyrecovery(unsigned char c[4][8])
 
 int main() {
    int ver=1;
-   unsigned int i,j,k,kk,kk1,kk2;
-   unsigned int j1,j2,j3;
-   unsigned char p1[8],p2[8],p3[8],p4[8];
-   unsigned char c[4][8];
+   
+   
    unsigned char k1[24], k2[24], k3[24], k4[24];
    unsigned char dk1[24] = {00,00,00,00,00,00,0x10,00,00,00,00,00,00,00,0xc0,00};
    unsigned char dk2[24] = {00,00,0x01,00,00,00,00,00,00,00,0x07,00,00,00,00,00};
    unsigned char deltaX1[16]={11,14,9,4,3,7,8,5,6,2,12,0,10,15,1,13};
 
-   map<unsigned long, vector<unsigned char> > S1map;
-   map<unsigned long, vector<unsigned char> > S2map;
-   map<unsigned long, vector<unsigned char> > Hmap;
-   unsigned long index;
    //unsigned long long valuepair;
 
    clock_t START=clock();
@@ -1085,13 +1079,13 @@ int main() {
    generateSbox_4_y();
    srand((unsigned) time (NULL));
    // randomly choose k1
-   for(i = 0; i < 16; i++) k1[i] = rand() & 0xff;
+   for(int i = 0; i < 16; i++) k1[i] = rand() & 0xff;
    // derive k2
-   for(i = 0; i < 16; i++) k2[i] = k1[i]^dk1[i];
+   for(int i = 0; i < 16; i++) k2[i] = k1[i]^dk1[i];
    // derive k3
-   for(i = 0; i < 16; i++) k3[i] = k1[i]^dk2[i];
+   for(int i = 0; i < 16; i++) k3[i] = k1[i]^dk2[i];
    // derive k4
-   for(i = 0; i < 16; i++) k4[i] = k2[i]^dk2[i];
+   for(int i = 0; i < 16; i++) k4[i] = k2[i]^dk2[i];
    generateRoundKey(k1,roundkeyCells_k1,ver,r);
    generateRoundKey(k2,roundkeyCells_k2,ver,r);
    generateRoundKey(k3,roundkeyCells_k3,ver,r);
@@ -1100,87 +1094,122 @@ int main() {
    generateRoundKey(dk1,roundDK1,ver,r);
    generateRoundKey(dk2,roundDK2,ver,r);
    
-   unsigned long y=1024*1024*4;//2^22
-   //generate S1
-   for(i=0; i<y; i++){
-       // randomly choose p1
-       for(j = 0; j < 8; j++){
-           p1[j] = rand() & 0xff;
-           p2[j] = p1[j];
-       }
-       for(j = 0; j < 4096; j++){
-           j1=j&0xF;
-           j2=(j>>4)&0xF;
-           j3=(j>>8)&0xF;
-           p1[1]=((p1[1]&0x0f)|(j1<<4))&0xff;
-           p2[1]=((p2[1]&0x0f)|(deltaX1[j1]<<4))&0xff;
-           p1[2]=((p1[1]&0xf0)|j2)&0xff;
-           p2[2]=((p2[1]&0xf0)|deltaX1[j2])&0xff;
-           p1[4]=((p1[4]&0x0f)|(j3<<4))&0xff;
-           p2[4]=((p2[4]&0x0f)|(deltaX1[j3]<<4))&0xff;
-           ENC(p1, k1, ver, r); //c1 Z_16
-           ENC(p2, k2, ver, r); //c2 Z_16
-           index = geneindex(p1,p2);
 
-           if(S1map.find(index) != S1map.end()) {
-               vector<unsigned char> ttmp=S1map[index];
-               for(k = 0; k < 8; k++)
-                    ttmp.push_back(p1[k]);
-               for(k = 0; k < 8; k++)
-                    ttmp.push_back(p2[k]);
-               S1map[index] = ttmp;
-           } else {
-               vector<unsigned char> ttmp;
-               for(k = 0; k < 8; k++)
-                    ttmp.push_back(p1[k]);
-               for(k = 0; k < 8; k++)
-                    ttmp.push_back(p2[k]);
-               S1map[index] = ttmp;
-           }
+   unsigned long long rightkey;
+    rightkey = roundkeyCells_k1[15][0][1];
+    rightkey = (rightkey<<4) | roundkeyCells_k1[15][0][3];
+    rightkey = (rightkey<<4) | roundkeyCells_k1[15][1][3];
+    rightkey = (rightkey<<4) | roundkeyCells_k1[15][0][2];
+    rightkey = (rightkey<<4) | roundkeyCells_k1[15][1][0];
+    rightkey = (rightkey<<4) | roundkeyCells_k1[15][1][1];
+    rightkey = (rightkey<<4) | roundkeyCells_k1[14][0][3];
+    rightkey = (rightkey<<4) | roundkeyCells_k1[14][1][3];
+    for (int gk16=0; gk16<8; gk16++)
+        rightkey=(rightkey<<4)|roundkeyCells_k1[16][gk16>>2][gk16&0x3];
+
+   unsigned long y=1024*1024*4;//2^22
+   //unsigned long y=8;//2^10
+   
+   double wall_timer;
+   wall_timer = omp_get_wtime();
+   omp_set_num_threads(Nthreads);
+   int counter;
+   int sqrtN=sqrt(Nthreads);
+   
+   #pragma omp parallel for
+   for(counter=0;counter<Nthreads;counter++){
+       cout << counter << "\n";
+       unsigned int i,j,k,kk,kk1,kk2;
+       unsigned int j1,j2,j3;
+       unsigned char p1[8],p2[8],p3[8],p4[8];
+       unsigned char c[4][8];
+       map<unsigned long, vector<unsigned char>> S1map;
+       map<unsigned long, vector<unsigned char>> S2map;
+       map<unsigned long, vector<unsigned char>> Hmap;
+       map<unsigned long long, int> keycounter;
+       unsigned long index;
+       //generate S1
+       for(i=0; i<y/sqrtN; i++){
+           // randomly choose p1
+          for(j = 0; j < 8; j++){
+              p1[j] = rand() & 0xff;
+              p2[j] = p1[j];
+          }
+       
+          for(j = 0; j < 4096; j++){
+              j1=j&0xF;
+              j2=(j>>4)&0xF;
+              j3=(j>>8)&0xF;
+              p1[1]=((p1[1]&0x0f)|(j1<<4))&0xff;
+              p2[1]=((p2[1]&0x0f)|(deltaX1[j1]<<4))&0xff;
+              p1[2]=((p1[1]&0xf0)|j2)&0xff;
+              p2[2]=((p2[1]&0xf0)|deltaX1[j2])&0xff;
+              p1[4]=((p1[4]&0x0f)|(j3<<4))&0xff;
+              p2[4]=((p2[4]&0x0f)|(deltaX1[j3]<<4))&0xff;
+              ENC(p1, k1, ver, r); //c1 Z_16
+              ENC(p2, k2, ver, r); //c2 Z_16
+              index = geneindex(p1,p2);
+
+              if(S1map.find(index) != S1map.end()) {
+                  vector<unsigned char> ttmp=S1map[index];
+                  for(k = 0; k < 8; k++)
+                      ttmp.push_back(p1[k]);
+                  for(k = 0; k < 8; k++)
+                      ttmp.push_back(p2[k]);
+                  S1map[index] = ttmp;
+              } else {
+                  vector<unsigned char> ttmp;
+                  for(k = 0; k < 8; k++)
+                      ttmp.push_back(p1[k]);
+                  for(k = 0; k < 8; k++)
+                      ttmp.push_back(p2[k]);
+                  S1map[index] = ttmp;
+              }
+          }
        }
-   }
-   //generate S2
-   for(i=0; i<y; i++){
+       //generate S2
+       for(i=0; i<y/sqrtN; i++){
        // randomly choose p3
-       for(j = 0; j < 8; j++){
-           p3[j] = rand() & 0xff;
-           p4[j] = p3[j];
-       }
-       for(j = 0; j < 4096; j++){
-           j1=j&0xF;
-           j2=(j>>4)&0xF;
-           j3=(j>>8)&0xF;
-           p3[1]=((p3[1]&0x0f)|(j1<<4))&0xff;
-           p4[1]=((p4[1]&0x0f)|(deltaX1[j1]<<4))&0xff;
-           p3[2]=((p3[1]&0xf0)|j2)&0xff;
-           p4[2]=((p4[1]&0xf0)|deltaX1[j2])&0xff;
-           p3[4]=((p3[4]&0x0f)|(j3<<4))&0xff;
-           p3[4]=((p3[4]&0x0f)|(deltaX1[j3]<<4))&0xff;
-           ENC(p3, k3, ver, r); //c1 Z_16
-           ENC(p4, k4, ver, r); //c2 Z_16
-           index = geneindex(p3,p4);
-           if(S2map.find(index) != S2map.end()) {
-               vector<unsigned char> ttmp=S2map[index];
-               for(k = 0; k < 8; k++)
-                    ttmp.push_back(p1[k]);
-               for(k = 0; k < 8; k++)
-                    ttmp.push_back(p2[k]);
-               S2map[index] = ttmp;
-           } else {
-               vector<unsigned char> ttmp;
-               for(k = 0; k < 8; k++)
-                    ttmp.push_back(p1[k]);
-               for(k = 0; k < 8; k++)
-                    ttmp.push_back(p2[k]);
-               S2map[index] = ttmp;
+           for(j = 0; j < 8; j++){
+               p3[j] = rand() & 0xff;
+               p4[j] = p3[j];
            }
-       }
-   }
-   //generate H
-   for (unsigned char gk=0; gk<16; gk++) {
+           for(j = 0; j < 4096; j++){
+               j1=j&0xF;
+               j2=(j>>4)&0xF;
+               j3=(j>>8)&0xF;
+               p3[1]=((p3[1]&0x0f)|(j1<<4))&0xff;
+               p4[1]=((p4[1]&0x0f)|(deltaX1[j1]<<4))&0xff;
+               p3[2]=((p3[1]&0xf0)|j2)&0xff;
+               p4[2]=((p4[1]&0xf0)|deltaX1[j2])&0xff;
+               p3[4]=((p3[4]&0x0f)|(j3<<4))&0xff;
+               p4[4]=((p4[4]&0x0f)|(deltaX1[j3]<<4))&0xff;
+               ENC(p3, k3, ver, r); //c3 Z_16
+               ENC(p4, k4, ver, r); //c4 Z_16
+               index = geneindex(p3,p4);
+               if(S2map.find(index) != S2map.end()) {
+                   vector<unsigned char> ttmp=S2map[index];
+                   for(k = 0; k < 8; k++)
+                       ttmp.push_back(p3[k]);
+                   for(k = 0; k < 8; k++)
+                       ttmp.push_back(p4[k]);
+                   S2map[index] = ttmp;
+               } else {
+                   vector<unsigned char> ttmp;
+                   for(k = 0; k < 8; k++)
+                        ttmp.push_back(p3[k]);
+                   for(k = 0; k < 8; k++)
+                        ttmp.push_back(p4[k]);
+                   S2map[index] = ttmp;
+              }
+          }
+      }
+    
+      //generate H
+      for (unsigned char gk=0; gk<16; gk++) {
         Hmap.clear();
         roundkey16[1][1]=gk;
-        map<unsigned long, vector<unsigned char> >::iterator iter1;
+        map<unsigned long, vector<unsigned char>>::iterator iter1;
         for(iter1 = S1map.begin(); iter1 != S1map.end(); iter1++) {
             unsigned long indexs1 = iter1->first;
             vector<unsigned char> ttmp1 = iter1->second;
@@ -1203,7 +1232,7 @@ int main() {
             }
         }
        
-       map<unsigned long, vector<unsigned char> >::iterator iter2;
+       map<unsigned long, vector<unsigned char>>::iterator iter2;
        for(iter2 = S2map.begin(); iter2 != S2map.end(); iter2++) {
            unsigned long indexs2 = iter2->first;
            vector<unsigned char> ttmp2 = iter2->second;
@@ -1213,36 +1242,50 @@ int main() {
                indexs2 = (indexs2<<4)| c3hf;
                indexs2 = (indexs2<<4)| c4hf;
                if(Hmap.find(indexs2) != Hmap.end()) {
+                   
                    for(kk = 0; kk < 8; kk++)
                        c[2][kk]=ttmp2[k+kk];
                    for(kk = 0; kk < 8; kk++)
                        c[3][kk]=ttmp2[k+kk+8];
+                                  
                    vector<unsigned char> ttmp22=Hmap[indexs2];
+                   
                    for (kk1=0; kk1<ttmp22.size(); kk1=kk1+16) {
                        for(kk2 = 0; kk2 < 8; kk2++)
                            c[0][kk2]=ttmp22[kk1+kk2];
-                       for(kk = 0; kk < 8; kk++)
+                       for(kk2 = 0; kk2 < 8; kk2++)
                            c[1][kk2]=ttmp22[kk1+kk2+8];
-                       keyrecovery(c);
+                       //cout << "c0: ";
+                       //for (int print=0; print < 8; print ++)
+                       //    cout << bitset<8>( c[0][print]) << ' ';
+                       //cout << "\n";
+                       //cout << "c2: ";
+                       //for (int print=0; print < 8; print ++)
+                       //    cout << bitset<8>( c[2][print]) << ' ';
+                       //cout << "\n";
+                       //cout << "c1: ";
+                       //for (int print=0; print < 8; print ++)
+                       //    cout << bitset<8>( c[1][print]) << ' ';
+                       //cout << "\n";
+                       //cout << "c3: ";
+                       //for (int print=0; print < 8; print ++)
+                       //    cout << bitset<8>( c[3][print]) << ' ';
+                       //cout << "\n";
+                       //cout << "\n";
+                       keyrecovery(keycounter,c);
                    }
                }
            }
        }
    }
-    unsigned long long rightkey;
-    rightkey = roundkeyCells_k1[15][0][1];
-    rightkey = (rightkey<<4) | roundkeyCells_k1[15][0][3];
-    rightkey = (rightkey<<4) | roundkeyCells_k1[15][1][3];
-    rightkey = (rightkey<<4) | roundkeyCells_k1[15][0][2];
-    rightkey = (rightkey<<4) | roundkeyCells_k1[15][1][0];
-    rightkey = (rightkey<<4) | roundkeyCells_k1[15][1][1];
-    rightkey = (rightkey<<4) | roundkeyCells_k1[14][0][3];
-    rightkey = (rightkey<<4) | roundkeyCells_k1[14][1][3];
-    for (int gk16=0; gk16<8; gk16++)
-        rightkey=(rightkey<<4)|roundkeyCells_k1[16][gk16>>2][gk16&0x3];
-    cout << keycounter[rightkey] << endl;
+    
+    //cout << keycounter[rightkey] << endl;
     if (keycounter[rightkey]>=1)
         cout << "The attack on 17-round skinny-64-128 succeed" << endl;
+   }
+
+
+
     
     
    clock_t FINISH=clock();
