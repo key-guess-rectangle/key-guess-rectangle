@@ -1,4 +1,4 @@
-#88 Key Guessing Strategies for Linear Key-Schedule Algorithms in Rectangle Attacks
+#39 Key Guessing Strategies for Linear Key-Schedule Algorithms in Rectangle Attacks
 ===
 Experiment of Computing Success Probability with binomial distribution or Poisson distribution
 ---
