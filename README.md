@@ -1,5 +1,8 @@
 #88 Key Guessing Strategies for Linear Key-Schedule Algorithms in Rectangle Attacks
 ===
+Experiment of Rectangle Attack on 17-Round SKINNY-64/128
+---
+* `Experiment_17r_skinny_64_128/17r_attack.cpp`: Source code for the experiment using OpenMP.
 
 Experiment of Rectangle Attack on 10-Round Simon-32/64
 ---
