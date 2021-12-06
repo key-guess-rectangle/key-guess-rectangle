@@ -26,6 +26,7 @@ On response to Review #39B
 According to the estimation ``2^{-n} \approx p^2q^2’’ in Eq. (22), we have T_2 \approx 2^{m_b+2*r_f+m’_f-2h_f} in Eq.(27), and T_3=2^{k-h} > 2^{k-(m_b+m_f-x)}> 2^{k-(m_b+m_f)}. In single-key attack on10-r Serpent-128-256, we know m_b=r_b,m_f=r_f, and m’_f=h_f (i.e., guessing 4-bit key for one active Sbox, we get two 4-bit filter). Hence, T_2 \approx 2^{m_b+2*m_f-m’_f }. If we let m’_f=m_f, then T_2 \approx 2^{m_b+m_f}. Considering T_3 and T_2:
 1)	When m_b+m_f < k/2, T_3 is the dominating one. Hence, in this case, the effective of the tradeoff is marginal. Unfortunately, the case happens to the 10-round attack, where mb+mf=20+76=96<128. So the improvement is marginal (only a factor of about 2^{10}).
 2)	When m_b+m_f > k/2, we may choose m’_f to reduce T_2, and choose h, so that T_3\approx T_2. 
+
 Hence, if we extend more rounds before and after the distinguisher to let m_b+m_f increase, we may have a better tradeoff. However, for Serpent, one additional round leads to significantly increase of m_b+m_f (close to the full key) due to the fast diffusion of Serpent’s round function as well as the boomerang distinguisher with many active input/output Sboxes. Hence, we fail to find a 11-round attack. Future work is find better distinguishers, which are friendly to our tradeoff model. 
 
 
