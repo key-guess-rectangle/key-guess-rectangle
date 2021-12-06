@@ -4,7 +4,7 @@ Experiment of Computing Success Probability with Various Parameters
 ---
 * `success_probability.m`: Source code for computing success probability.
 
-Success Probability for 32-round SKINNY-128-384 with s=10. s' is a threshold value, that only candidate keys with counter > s' are test in Exhaustive search. An s' will correspond to an h as shown in the following table.
+Success Probability for 32-round SKINNY-128-384 with s=10. s' is a threshold value, that only candidate keys with counter > s' are test in Exhaustive search. A s' will correspond to an h as shown in the following table.
 
 s' | Data | Memory | Time | Success Probability | Advantage h
 ----|-----|------|-------|--------|---------
