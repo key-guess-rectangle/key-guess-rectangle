@@ -1,6 +1,6 @@
 #88 Key Guessing Strategies for Linear Key-Schedule Algorithms in Rectangle Attacks
 ===
-Experiment of Computing Success Probability with Various Parameters
+Experiment of Computing Success Probability with binomial distribution or Poisson distribution
 ---
 * `success_probability.m`: Source code for computing success probability.
 
