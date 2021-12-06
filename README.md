@@ -7,6 +7,7 @@ Experiment of Computing Success Probability with Various Parameters
 Success Probability for 32-round SKINNY-128-384 with s=10
 
 s' | Data | Memory | Time | Success Probability | Advantage h
+----|-----|------|-------|--------|---------
 1 | 2^{125.2} | 2^{125.2} | 2^{363.84} | 99.9% | 20.18
 2 | 2^{125.2} | 2^{125.2} | 2^{357.37} | 99.7% | 31.35
 
