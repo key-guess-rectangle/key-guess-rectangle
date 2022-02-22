@@ -30,17 +30,6 @@ According to the estimation ``2^{-n} \approx p^2q^2’’ in Eq. (22), we have T
 Hence, if we extend more rounds before and after the distinguisher to let m_b+m_f increase, we may have a better tradeoff. However, for Serpent, one additional round leads to significantly increase of m_b+m_f (close to the full key) due to the fast diffusion of Serpent’s round function as well as the boomerang distinguisher with many active input/output Sboxes. Hence, we fail to find a 11-round attack. Future work is find better distinguishers, which are friendly to our tradeoff model. 
 
 
-
-Experiment of Rectangle Attack on 17-Round SKINNY-64/128
----
-* `Experiment_17r_skinny_64_128/17r_attack.cpp`: Source code for the experiment using OpenMP.
-
-Experiment of Rectangle Attack on 10-Round Simon-32/64
----
-* `Rebuttal_Supplement_Simon32.pdf`: discribe an experiment on 10-round Simon-32/64.
-* `10r_simon32_rectangle.cpp`: Source code for the experiment.
-
-
 Source Code
 ---
 This repository contains all the tools implemented for the automated search of boomerangs on skinny. It also contains some files to check the result claimed in the article.
